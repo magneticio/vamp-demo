@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault
+spec:
+  ports:
+  - port: 8200
+    protocol: TCP
+    targetPort: 8200
+  selector:
+    app: vault
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault
+  template:
+    metadata:
+      labels:
+        app: vault
+      name: vault
+    spec:
+      containers:
+      - name: vault
+        image: vault:1.0.3
+        ports:
+        - containerPort: 8200
+          protocol: TCP
+        env:
+        - name: VAULT_DEV_ROOT_TOKEN_ID
+          value: vamp
+        resources:
+          requests:
+            cpu: 0.2
+            memory: 256
+        securityContext:
+          capabilities:
+            add: ["IPC_LOCK"]
+        readinessProbe:
+          exec:
+            command: ["vault", "status", "-address=http://127.0.0.1:8200"]
+          initialDelaySeconds: 5
+          periodSeconds: 15

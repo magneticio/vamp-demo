@@ -1,0 +1,89 @@
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: vamp-sa-cluster-admin-binding
+subjects:
+- kind: User
+  name: system:serviceaccount:default:default
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vamp
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: vamp
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: vamp
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: VAMP_IP_NAME
+  labels:
+    app: vamp
+spec:
+  backend:
+    serviceName: vamp
+    servicePort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vamp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vamp
+  template:
+    metadata:
+      labels:
+        app: vamp
+      name: vamp
+    spec:
+      containers:
+      - name: vamp
+        image: magneticio/vamp-ee:VAMP_VERSION-kubernetes
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        env:
+        - name: VAMP_EE_NAMESPACE
+          value: vampio
+        - name: VAMP_EE_METADATA_NAMESPACE_TITLE
+          value: vamp.io
+        - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_TYPE
+          value: vault
+        - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_VAULT_URL
+          value: http://vault.KUBERNETES_NAMESPACE.svc.cluster.local:8200
+        - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_BASE_PATH
+          value: secret/vamp
+        - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_VAULT_TOKEN
+          value: vamp.io
+        - name: VAMP_WORKFLOW_DRIVER_WORKFLOW_VAMP_KEY_VALUE_STORE_TOKEN
+          value: vamp
+        - name: VAMP_WORKFLOW_DRIVER_WORKFLOW_VAMP_KEY_VALUE_STORE_CONNECTION
+          value: http://vault.KUBERNETES_NAMESPACE.svc.cluster.local:8200
+        resources:
+          requests:
+            cpu: 0.1
+            memory: 1024
+        securityContext:
+          privileged: false
+      imagePullSecrets:
+        - name: regsecret

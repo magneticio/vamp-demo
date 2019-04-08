@@ -1,0 +1,21 @@
+kind: workflows
+name: voting
+schedule: daemon
+arguments:
+  - privileged: "true"
+breed:
+  reference: voting
+environment_variables:
+  ACCEPTED_VOTE_PERCENTAGE: 70
+  DELETE_VOTES_ON_START: "true"
+  DENIED_VOTE_PERCENTAGE: 30
+  KIBANA_URL: "https://kibana.howd.io"
+  KIBANA_VERSION: 6.2.4
+  MINIMUM_VOTES_FOR_DECISION: 5
+  TARGET_GATEWAY_NAME: vshop-experiment/vshop-experiment-cluster/web
+  VOTES_FOR_VERSION: 2
+  WORKFLOW_NAME: voting
+  ROUTE_1: vshop-experiment/vshop-experiment-cluster/vshop-breed:1.2.0-a/web
+  ROUTE_2: vshop-experiment/vshop-experiment-cluster/vshop-breed:1.2.0-b/web
+  VAMP_WORKFLOW_EXECUTION_PERIOD: 10
+  VAMP_WORKFLOW_EXECUTION_TIMEOUT: 10

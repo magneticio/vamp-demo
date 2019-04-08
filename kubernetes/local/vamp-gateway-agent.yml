@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vamp-gateway-agent
+  labels:
+    io.vamp: daemon
+spec:
+  selector:
+    io.vamp: vamp-gateway-agent
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: vamp-gateway-agent
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        io.vamp: vamp-gateway-agent
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: "vamp.io"
+                operator: In
+                values:
+                - vamp-gateway-agent
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: vamp-gateway-agent
+        image: magneticio/vamp-gateway-agent:VAMP_VERSION
+        ports:
+        - name: p80
+          containerPort: 80
+        env:
+        - name: VAMP_NAMESPACE
+          value: 6d1339c7c7a1ac54246a57320bb1dd15176ce29
+        - name: VAMP_KEY_VALUE_STORE_TYPE
+          value: vault
+        - name: VAMP_KEY_VALUE_STORE_TOKEN
+          value: vamp
+        - name: VAMP_KEY_VALUE_STORE_CONNECTION
+          value: http://vault.default.svc.cluster.local:8200
+        - name: VAMP_KEY_VALUE_STORE_PATH
+          value: /secret/vamp/vampio-organization-environment/gateways/haproxy/1.8/configuration
+        - name: VAMP_ELASTICSEARCH_URL
+          value: http://elasticsearch.default.svc.cluster.local:9200
+        resources:
+          requests:
+            cpu: 1
+            memory: 1024

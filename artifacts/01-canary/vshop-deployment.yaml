@@ -1,0 +1,52 @@
+name: vshop-canary
+gateways:
+  9050:
+    routes: vshop-canary-cluster/web
+    virtual_hosts: [vshop-canary.demo.howd.io]
+clusters:
+  vshop-canary-cluster:
+    services:
+    - breed:
+        name: vshop-breed:1.0.0
+        kind: breeds
+        deployable:
+          definition: magneticio/simpleservice:2.0.11
+        ports:
+          web: 9191/http
+        environment_variables:
+          SHOP_VERSION: 1
+          MaximumRequestPerSecond: 10000
+          TimeOutInXthRequest: -1
+          GET_FEEDBACK: 'no'
+          VAMP_ELASTICSEARCH_URL: 'http://elasticsearch.default.svc.cluster.local:9200'
+      scale:
+        cpu: 0.5
+        memory: 1024.00MB
+        instances: 1
+    - breed:
+        name: vshop-breed:1.1.0
+        kind: breeds
+        deployable:
+          definition: magneticio/simpleservice:2.0.11
+        ports:
+          web: 9191/http
+        environment_variables:
+          SHOP_VERSION: 2
+          MaximumRequestPerSecond: 10000
+          TimeOutEnabledIfRequestCountIsHigherThanXPer5Seconds: 5
+          TimeOutInXthRequest: 2
+          GET_FEEDBACK: ’no'
+          VAMP_ELASTICSEARCH_URL: 'http://elasticsearch.default.svc.cluster.local:9200'
+      scale:
+        cpu: 0.5
+        memory: 1024.00MB
+        instances: 1
+    gateways:
+      web:
+        virtual_hosts:
+        - web.vshop-canary-cluster.simple-deployment.vamp
+        routes:
+          vshop-breed:1.1.0:
+            weight: 0%
+          vshop-breed:1.0.0:
+            weight: 100%

@@ -1,0 +1,59 @@
+name: canary
+kind: breeds
+metadata: {}
+deployable:
+  type: application/javascript
+  definition: |
+    'use strict';
+    let _ = require('highland');
+    let vamp = require('vamp-node-client');
+    let api = new vamp.Api();
+    let http = new vamp.Http();
+    let metrics = new vamp.ElasticsearchMetrics(api);
+    let headers = {'Accept': 'application/json','Content-Type': 'application/json','Authorization': 'token ' + process.env.VAMP_API_TOKEN};
+    var $gateway  = process.env.GATEWAY;
+    var $service1 = process.env.SERVICE1;
+    var $service2 = process.env.SERVICE2;
+    var $period = Number(process.env.PERIOD); // seconds
+    var $window = Number(process.env.WINDOW); // seconds
+    var run = function () {
+      api.get('gateways/' + $gateway).each(function (gateway) {
+        metrics.count({ft: gateway.lookup_name}, {ST: {gte: 500}}, $window).each(function (errorCount) {
+          if (errorCount > 0)
+            rollback(gateway);
+          else
+            increase(gateway, gateway['routes'][$service1]['weight']);
+        });
+      });
+    };
+    var increase = function (gateway, oldWeight) {
+      oldWeight = oldWeight.substring(0, oldWeight.length - 1);
+      if (oldWeight > 0) {
+        var newWeight = oldWeight - 5;
+        gateway['routes'][$service1]['weight'] = newWeight < 0 ? '0%' : newWeight + '%';
+        gateway['routes'][$service2]['weight'] = newWeight < 0 ? '100%' : (100 - newWeight) + '%';
+        update(gateway);
+      }
+    };
+    var rollback = function (gateway) {
+      if ( gateway['routes'][$service1]['weight'] !== '100%') {
+        gateway['routes'][$service1]['weight'] = '100%';
+        gateway['routes'][$service2]['weight'] = '0%';
+        update(gateway);
+      }
+    };
+    var update = function (gateway) {
+      http.request(api.url + '/gateways/' + $gateway, {method: 'PUT', headers: headers}, JSON.stringify(gateway)).then(function () {
+        api.event(['workflows:canary', 'updated'],
+          gateway['routes'][$service1]['weight'] + '/' + gateway['routes'][$service2]['weight']);
+      }).catch(function (error) {
+        api.event(['workflows:canary', 'error'], error);
+      });
+    };
+    run();
+    setInterval(run, $period * 1000);
+ports: {}
+environment_variables: {}
+constants: {}
+arguments: []
+dependencies: {}

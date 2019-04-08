@@ -1,0 +1,33 @@
+name: vshop-experiment
+gateways:
+  9060:
+    routes: vshop-experiment-cluster/web
+    virtual_hosts: [vshop-experiment.demo.howd.io]
+clusters:
+  vshop-experiment-cluster:
+    gateways:
+      web:
+        routes:
+          vshop-breed:1.2.0-a: {condition_strength: 0%, weight: 100%}
+          vshop-breed:1.2.0-b:
+            condition: {condition: user-agent==iPhone}
+            condition_strength: 100%
+            weight: 0%
+        virtual_hosts: [web.vshop-experiment-cluster.simple-deployment.vamp]
+    services:
+    - breed:
+        deployable: {definition: 'magneticio/simpleservice:2.0.11'}
+        environment_variables: {GET_FEEDBACK: 'no', MaximumRequestPerSecond: 10000,
+          SHOP_VERSION: 1, TimeOutInXthRequest: -1, VAMP_ELASTICSEARCH_URL: 'http://elasticsearch.default.svc.cluster.local:9200'}
+        kind: breeds
+        name: vshop-breed:1.2.0-a
+        ports: {web: 9191/http}
+      scale: {cpu: 0.5, instances: 1, memory: 1024.00MB}
+    - breed:
+        deployable: {definition: 'magneticio/simpleservice:2.0.11'}
+        environment_variables: {GET_FEEDBACK: 'yes', MaximumRequestPerSecond: 10000,
+          SHOP_VERSION: 2, TimeOutInXthRequest: -1, VAMP_ELASTICSEARCH_URL: 'http://elasticsearch.default.svc.cluster.local:9200'}
+        kind: breeds
+        name: vshop-breed:1.2.0-b
+        ports: {web: 9191/http}
+      scale: {cpu: 0.5, instances: 1, memory: 1024.00MB}

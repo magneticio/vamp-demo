@@ -1,0 +1,12 @@
+kind: workflows
+name: canary
+breed: canary
+schedule: daemon
+environment_variables:
+  PERIOD  : 15
+  WINDOW  : 30
+  GATEWAY : "vshop-canary/vshop-canary-cluster/web"
+  SERVICE1: "vshop-canary/vshop-canary-cluster/vshop-breed:1.0.0/web"
+  SERVICE2: "vshop-canary/vshop-canary-cluster/vshop-breed:1.1.0/web"
+  VAMP_WORKFLOW_EXECUTION_PERIOD:  0
+  VAMP_WORKFLOW_EXECUTION_TIMEOUT: 0
