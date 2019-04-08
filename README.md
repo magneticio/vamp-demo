@@ -18,7 +18,7 @@ _* Not needed for local usage_
 Skips the creation of a Kubernetes cluster and deploys Vamp and it's services to the current context defined by kubectl.
 
 ```sh
-./demo.sh build -c=local
+./demo.sh build
 ```
 
 ### Google Cloud Platform

@@ -8,8 +8,10 @@ variable "project" {
   default = "vamp-177714"
 }
 
-variable "credentials" {
-  default = "~/.gcloud/vamp-demo.json"
+variable "project" {
+  default = "vamp-177714"
 }
 
-variable "enabled" {}
+variable "dns_zone" {
+  default = "demo-vamp-cloud"
+}

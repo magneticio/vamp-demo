@@ -1,3 +1,3 @@
 data "google_dns_managed_zone" "demo" {
-  name        = "preview-howd-io"
+  name        = "${var.dns_zone}"
 }
