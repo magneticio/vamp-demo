@@ -23,7 +23,7 @@ Skips the creation of a Kubernetes cluster and deploys Vamp and it's services to
 
 ### Google Cloud Platform
 ```sh
-./demo.sh build -c=gcloud
+./demo.sh build -c=gcloud -n=vamp-$RANDOM
 ```
 
 > Note: If you start with a fresh cluster you are asked to provide your Docker Hub username and password which are used to fetch the Vamp container image. This will change when we enable support for public releases.
