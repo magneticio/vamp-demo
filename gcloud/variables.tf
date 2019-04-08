@@ -8,10 +8,6 @@ variable "project" {
   default = "vamp-177714"
 }
 
-variable "project" {
-  default = "vamp-177714"
-}
-
 variable "dns_zone" {
   default = "demo-vamp-cloud"
 }

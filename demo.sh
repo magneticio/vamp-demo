@@ -62,7 +62,9 @@ function print_help() {
 
 function build {
     if [ $cloud != "local" ]; then
+        set -e
         source ./scripts/create-cluster-$cloud.sh $name
+        set +e
     fi
 
     ./scripts/deploy-vamp.sh $cloud $name $environment $version
