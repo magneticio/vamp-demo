@@ -1,0 +1,25 @@
+name: release
+kind: breeds
+deployable:
+  definition: magneticio/vamp-release-agent:latest
+ports:
+  webport: 8000/http
+environment_variables:
+  VAMP_URL                            : ${config://vamp.workflow-driver.workflow.vamp-url}
+  VAMP_API_TOKEN                      : ${vamp://token}
+  VAMP_NAMESPACE                      : ${config://vamp.namespace}
+  VAMP_KEY_VALUE_STORE_TYPE           : ${config://vamp.workflow-driver.workflow.vamp-key-value-store-type}
+  VAMP_KEY_VALUE_STORE_CONNECTION     : ${config://vamp.workflow-driver.workflow.vamp-key-value-store-connection}
+  VAMP_KEY_VALUE_STORE_TOKEN          : ${config://vamp.workflow-driver.workflow.vamp-key-value-store-token}
+  VAMP_KEY_VALUE_STORE_PATH           : ${config://vamp.workflow-driver.workflow.vamp-key-value-store-path}
+  VAMP_ELASTICSEARCH_URL              : ${config://vamp.pulse.elasticsearch.url}
+  VAMP_ELASTICSEARCH_HEALTH_INDEX     : vamp-pulse-${config://vamp.namespace}-health-*
+  VAMP_NSS_URL                        : ${config://vamp.pulse.nats.url}
+  VAMP_NSS_CLIENT_ID                  : ${config://vamp.namespace}-release-agent
+  VAMP_NSS_CLUSTER_ID                 : ${config://vamp.pulse.nats.cluster-id}
+  VAMP_NSS_USER                       : ${config://vamp.pulse.nats.username}
+  VAMP_NSS_PASSWORD                   : ${config://vamp.pulse.nats.password}
+  VAMP_NSS_TOKEN                      : ${config://vamp.pulse.nats.token}
+  VAMP_NSS_TLS_CA_CERT                : ${config://vamp.pulse.nats.ca-cert}
+  VAMP_NSS_TLS_CLIENT_CERT            : ${config://vamp.pulse.nats.client-cert}
+  VAMP_NSS_TLS_CLIENT_KEY             : ${config://vamp.pulse.nats.client-key}
