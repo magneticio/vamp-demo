@@ -12,7 +12,8 @@ version="1.1.1"
 
 function parse_command_line() {
     flag_help=0
-    flag_build=0
+    flag_create=0
+    flag_update=0
     flag_destroy=0
 
     for key in "$@"
@@ -21,8 +22,11 @@ function parse_command_line() {
         help)
         flag_help=1
         ;;
-        build)
-        flag_build=1
+        create)
+        flag_create=1
+        ;;
+        update)
+        flag_update=1
         ;;
         destroy)
         flag_destroy=1
@@ -52,7 +56,8 @@ function parse_command_line() {
 function print_help() {
     echo "${green}Usage of $0:${reset}"
     echo "${yellow}  help                  ${green}Help.${reset}"
-    echo "${yellow}  build                 ${green}Builds a fresh environment.${reset}"
+    echo "${yellow}  create                ${green}Creates a fresh environment.${reset}"
+    echo "${yellow}  update                ${green}Updates an environment.${reset}"
     echo "${yellow}  destroy               ${green}Destroys an environment.${reset}"
     echo "${yellow}  -n=*|--name=*         ${green}Specifying the name. Defaults to '$name'.${reset}"
     echo "${yellow}  -c=*|--cloud=*        ${green}Specifying which cloud provider to user (local, gcloud). Defaults to '$cloud'.${reset}"
@@ -60,10 +65,11 @@ function print_help() {
     echo "${yellow}  -v=*|--version=*      ${green}Specifying the version of Vamp which will be deployed. Defaults to '$version'.${reset}"
 }
 
-function build {
+function create {
     if [ $cloud != "local" ]; then
         set -e
         source ./scripts/create-cluster-$cloud.sh $name
+        source ./scripts/import-cluster-$cloud.sh $name
         set +e
     fi
 
@@ -71,11 +77,21 @@ function build {
 
     echo "Your demo environment is ready!"
     if [ $cloud != "local" ]; then
-        echo "Vamp URL: http://vamp.$name.demo.vamp.cloud"
+        echo "Vamp URL: http://$name.demo.vamp.cloud"
     else
         echo "Run: kubectl proxy"
         echo "Vamp URL: http://localhost:8001/api/v1/namespaces/default/services/vamp:/proxy/#"
     fi
+}
+
+function update {
+    echo "Updating environment '$name' on cloud '$cloud'"
+    if [ $cloud != "local" ]; then
+        set -e
+        source ./scripts/import-cluster-$cloud.sh $name
+        set +e
+    fi
+    ./scripts/update-vamp.sh $cloud $name $environment $version
 }
 
 function destroy {
@@ -83,7 +99,7 @@ function destroy {
     if [ $cloud != "local" ]; then
         ./scripts/destroy-cluster.sh $cloud
     else
-        ./scripts/destroy-resources.sh $cloud
+        ./scripts/delete-vamp.sh $cloud
     fi
 }
 
@@ -93,8 +109,12 @@ if [ ${flag_help} -eq 1 ] || [[ $# -eq 0 ]]; then
     print_help
 fi
 
-if [ ${flag_build} -eq 1 ]; then
-    build
+if [ ${flag_create} -eq 1 ]; then
+    create
+fi
+
+if [ ${flag_update} -eq 1 ]; then
+    update
 fi
 
 if [ ${flag_destroy} -eq 1 ]; then

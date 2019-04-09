@@ -71,13 +71,5 @@ spec:
             memory: 1024
         securityContext:
           privileged: false
-        volumeMounts:
-        - name: certs
-          mountPath: "/etc/vamp/certs"
-          readOnly: true
       imagePullSecrets:
         - name: regsecret
-      volumes:
-        - name: certs
-          secret:
-            secretName: nats-certs

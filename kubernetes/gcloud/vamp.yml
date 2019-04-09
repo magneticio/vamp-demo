@@ -74,14 +74,14 @@ spec:
         - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_BASE_PATH
           value: secret/vamp
         - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_VAULT_TOKEN
-          value: vamp.io
+          value: vamp
         - name: VAMP_WORKFLOW_DRIVER_WORKFLOW_VAMP_KEY_VALUE_STORE_TOKEN
           value: vamp
         - name: VAMP_WORKFLOW_DRIVER_WORKFLOW_VAMP_KEY_VALUE_STORE_CONNECTION
           value: http://vault.KUBERNETES_NAMESPACE.svc.cluster.local:8200
         resources:
           requests:
-            cpu: 0.1
+            cpu: 0.2
             memory: 1024
         securityContext:
           privileged: false

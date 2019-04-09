@@ -18,17 +18,15 @@ _* Not needed for local usage_
 Skips the creation of a Kubernetes cluster and deploys Vamp and it's services to the current context defined by kubectl.
 
 ```sh
-./demo.sh build
+./demo.sh create
 ```
 
 ### Google Cloud Platform
 ```sh
-./demo.sh build -c=gcloud -n=vamp-$RANDOM
+./demo.sh create -c=gcloud -n=vamp$RANDOM
 ```
 
 > Note: If you start with a fresh cluster you are asked to provide your Docker Hub username and password which are used to fetch the Vamp container image. This will change when we enable support for public releases.
-
-> Note: In Google Cloud it takes roughly 10 mins for the Ingress Controller to serve Vamp. 
 
 ## Teardown
 

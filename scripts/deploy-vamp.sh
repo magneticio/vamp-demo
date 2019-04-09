@@ -4,26 +4,9 @@ ORGANIZATION=${2:-vamp}
 ENVIRONMENT=${3:-demo}
 VAMP_VERSION=${4:-1.1.1}
 
-TEMP_DIR="./.temp"
-TEMPLATE_DIR="./kubernetes/$CLOUD"
 KUBERNETES_NAMESPACE="default"
 
-deploy() {
-    DEPLOYMENT=$1
-    DEPLOYMENT_NAMESPACE=${2:-$KUBERNETES_NAMESPACE}
-    set -e
-    echo "Deploying:" ${DEPLOYMENT}
-    sed -e "s|KUBERNETES_NAMESPACE|${DEPLOYMENT_NAMESPACE}|g" ${TEMPLATE_DIR}/${DEPLOYMENT}.yml > ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|VAMP_IP_NAME|${VAMP_IP}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|VAMP_IP_ADDRESS|${VAMP_IP}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|VGA_IP_NAME|${VAMP_IP}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|VGA_IP_ADDRESS|${VAMP_IP}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|VAMP_VERSION|${VAMP_VERSION}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
-    kubectl apply --namespace=${DEPLOYMENT_NAMESPACE} -f ${TEMP_DIR}/${DEPLOYMENT}.yml
-    set +e
-}
-
-mkdir -p $TEMP_DIR
+source ./scripts/common.sh
 
 deploy mysql
 deploy vault
@@ -67,8 +50,7 @@ if [ -z $VAMP_NAMESPACE ]; then
 fi
 
 # Force a restart of Vamp
-VAMP_POD=$(kubectl get --no-headers=true pods -o name --namespace ${KUBERNETES_NAMESPACE} | awk -F "/" '{print $2}' | grep vamp)
-kubectl delete pod $VAMP_POD
+restart_vamp ${KUBERNETES_NAMESPACE}
 
 deploy vamp-gateway-agent vampio-${ORGANIZATION}-${ENVIRONMENT}
 kubectl rollout status deployment/vamp-gateway-agent --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT}
