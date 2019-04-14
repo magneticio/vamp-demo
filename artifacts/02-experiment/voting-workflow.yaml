@@ -9,7 +9,7 @@ environment_variables:
   ACCEPTED_VOTE_PERCENTAGE: 70
   DELETE_VOTES_ON_START: "true"
   DENIED_VOTE_PERCENTAGE: 30
-  KIBANA_URL: "https://kibana.howd.io"
+  KIBANA_URL: "http://kibana.VAMP_ENDPOINT"
   KIBANA_VERSION: 6.2.4
   MINIMUM_VOTES_FOR_DECISION: 5
   TARGET_GATEWAY_NAME: vshop-experiment/vshop-experiment-cluster/web

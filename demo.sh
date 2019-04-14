@@ -74,8 +74,7 @@ function create {
     fi
 
     ./scripts/deploy-vamp.sh $cloud $name $environment $version
-
-    echo "Your demo environment is ready!"
+    
     if [ $cloud != "local" ]; then
         echo "Vamp URL: http://$name.demo.vamp.cloud"
         echo "Waiting until available..."
@@ -84,6 +83,7 @@ function create {
         echo "Run: kubectl proxy"
         echo "Vamp URL: http://localhost:8001/api/v1/namespaces/default/services/vamp:/proxy/#"
     fi
+    echo "Your demo environment is ready!"
 }
 
 function update {

@@ -31,7 +31,7 @@ resource "google_container_node_pool" "primary" {
   name               = "${var.name}-primary"
   region             = "${var.region}"
   cluster            = "${google_container_cluster.demo.name}"
-  node_count         = 1
+  node_count         = 2
 
   node_config {
     preemptible  = true

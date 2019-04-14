@@ -2,6 +2,10 @@ output "cluster_endpoint" {
   value = "${google_container_cluster.demo.endpoint}"
 }
 
+output "vamp_endpoint" {
+  value = "${google_dns_record_set.demo_vamp.name}"
+}
+
 output "vamp_ip_name" {
   value = "${google_compute_global_address.demo_vamp.name}"
 }

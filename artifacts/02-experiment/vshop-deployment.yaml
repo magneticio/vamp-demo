@@ -22,7 +22,7 @@ clusters:
         kind: breeds
         name: vshop-breed:1.2.0-a
         ports: {web: 9191/http}
-      scale: {cpu: 0.5, instances: 1, memory: 1024.00MB}
+      scale: {cpu: 0.5, instances: 1, memory: 512.00MB}
     - breed:
         deployable: {definition: 'magneticio/simpleservice:2.0.11'}
         environment_variables: {GET_FEEDBACK: 'yes', MaximumRequestPerSecond: 10000,
@@ -30,4 +30,4 @@ clusters:
         kind: breeds
         name: vshop-breed:1.2.0-b
         ports: {web: 9191/http}
-      scale: {cpu: 0.5, instances: 1, memory: 1024.00MB}
+      scale: {cpu: 0.5, instances: 1, memory: 512.00MB}

@@ -1,0 +1,7 @@
+name: kibana
+port: 5601/http
+sticky: route
+virtual_hosts: [kibana.VAMP_ENDPOINT]
+routes:
+  "[kibana.default.svc.cluster.local:5601]":
+    weight: 100%

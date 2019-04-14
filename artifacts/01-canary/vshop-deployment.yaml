@@ -21,7 +21,7 @@ clusters:
           VAMP_ELASTICSEARCH_URL: 'http://elasticsearch.default.svc.cluster.local:9200'
       scale:
         cpu: 0.5
-        memory: 1024.00MB
+        memory: 512.00MB
         instances: 1
     - breed:
         name: vshop-breed:1.1.0
@@ -39,7 +39,7 @@ clusters:
           VAMP_ELASTICSEARCH_URL: 'http://elasticsearch.default.svc.cluster.local:9200'
       scale:
         cpu: 0.5
-        memory: 1024.00MB
+        memory: 512.00MB
         instances: 1
     gateways:
       web:

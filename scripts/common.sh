@@ -11,11 +11,14 @@ deploy() {
     set -e
     echo "Deploying:" ${DEPLOYMENT}
     sed -e "s|KUBERNETES_NAMESPACE|${DEPLOYMENT_NAMESPACE}|g" ${TEMPLATE_DIR}/${DEPLOYMENT}.yml > ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|VAMP_IP_NAME|${VAMP_IP}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|VAMP_IP_ADDRESS|${VAMP_IP}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|VGA_IP_NAME|${VAMP_IP}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|VGA_IP_ADDRESS|${VAMP_IP}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
+    sed -i.bak "s|VAMP_IP_NAME|${VAMP_IP_NAME}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
+    sed -i.bak "s|VAMP_IP_ADDRESS|${VAMP_IP_ADDRESS}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
+    sed -i.bak "s|VGA_IP_NAME|${VGA_IP_NAME}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
+    sed -i.bak "s|VGA_IP_ADDRESS|${VGA_IP_ADDRESS}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
     sed -i.bak "s|VAMP_VERSION|${VAMP_VERSION}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
+    sed -i.bak "s|VAMP_NAMESPACE|${VAMP_NAMESPACE}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
+    sed -i.bak "s|VAMP_ORGANIZATION|${VAMP_ORGANIZATION}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
+    sed -i.bak "s|VAMP_ENVIRONMENT|${VAMP_ENVIRONMENT}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
     kubectl apply --namespace=${DEPLOYMENT_NAMESPACE} -f ${TEMP_DIR}/${DEPLOYMENT}.yml
     set +e
 }
