@@ -52,6 +52,8 @@ fi
 # Force a restart of Vamp
 restart_vamp ${KUBERNETES_NAMESPACE}
 
+source ./scripts/import-vamp.sh ${ORGANIZATION} ${ENVIRONMENT}
+
 deploy vamp-gateway-agent vampio-${ORGANIZATION}-${ENVIRONMENT}
 kubectl rollout status deployment/vamp-gateway-agent --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT}
 

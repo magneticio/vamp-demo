@@ -3,7 +3,7 @@ output "cluster_endpoint" {
 }
 
 output "vamp_endpoint" {
-  value = "${google_dns_record_set.demo_vamp.name}"
+  value = "${replace(google_dns_record_set.demo_vamp.name, "/[.]$/", "")}"
 }
 
 output "vamp_ip_name" {

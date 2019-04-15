@@ -32,7 +32,7 @@ kind: Ingress
 metadata:
   name: vamp
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: VAMP_IP_NAME
+    kubernetes.io/ingress.global-static-ip-name: __VAMP_IP_NAME__
   labels:
     app: vamp
 spec:
@@ -58,7 +58,7 @@ spec:
     spec:
       containers:
       - name: vamp
-        image: magneticio/vamp-ee:VAMP_VERSION-kubernetes
+        image: magneticio/vamp-ee:__VAMP_VERSION__-kubernetes
         ports:
         - containerPort: 8080
           protocol: TCP
@@ -70,7 +70,7 @@ spec:
         - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_TYPE
           value: vault
         - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_VAULT_URL
-          value: http://vault.KUBERNETES_NAMESPACE.svc.cluster.local:8200
+          value: http://vault.default.svc.cluster.local:8200
         - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_BASE_PATH
           value: secret/vamp
         - name: VAMP_PERSISTENCE_KEY_VALUE_STORE_VAULT_TOKEN
@@ -78,7 +78,7 @@ spec:
         - name: VAMP_WORKFLOW_DRIVER_WORKFLOW_VAMP_KEY_VALUE_STORE_TOKEN
           value: vamp
         - name: VAMP_WORKFLOW_DRIVER_WORKFLOW_VAMP_KEY_VALUE_STORE_CONNECTION
-          value: http://vault.KUBERNETES_NAMESPACE.svc.cluster.local:8200
+          value: http://vault.default.svc.cluster.local:8200
         resources:
           requests:
             cpu: 0.2

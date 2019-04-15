@@ -4,8 +4,8 @@ provider "google" {
 }
 
 resource "google_container_cluster" "demo" {
-  name   = "${var.name}"
-  region = "${var.region}"
+  name     = "${var.name}"
+  location = "${var.region}"
 
   remove_default_node_pool = true
   initial_node_count       = 3
@@ -29,7 +29,7 @@ resource "google_container_cluster" "demo" {
 
 resource "google_container_node_pool" "primary" {
   name               = "${var.name}-primary"
-  region             = "${var.region}"
+  location           = "${var.region}"
   cluster            = "${google_container_cluster.demo.name}"
   node_count         = 2
 
