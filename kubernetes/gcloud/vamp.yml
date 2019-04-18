@@ -18,27 +18,14 @@ kind: Service
 metadata:
   name: vamp
 spec:
-  type: NodePort
+  type: LoadBalancer
+  loadBalancerIP: __VAMP_IP_ADDRESS__
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
     app: vamp
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: vamp
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: __VAMP_IP_NAME__
-  labels:
-    app: vamp
-spec:
-  backend:
-    serviceName: vamp
-    servicePort: 8080
 
 ---
 apiVersion: apps/v1

@@ -69,7 +69,7 @@ vamp:
     nats:
       url: nats://nats-streaming.default.svc.cluster.local:4222
       cluster-id: test-cluster
-    type: nats
+    type: elasticsearch
   operation:
     synchronization:
       period: 3 seconds
