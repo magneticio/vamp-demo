@@ -36,7 +36,7 @@ vamp:
     nats:
       url: nats://nats-streaming.default.svc.cluster.local:4222
       cluster-id: test-cluster
-    type: elasticsearch
+    type: nats
   metadata:
     namespace:
       title: organization

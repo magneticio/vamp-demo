@@ -46,7 +46,7 @@ resource "google_container_node_pool" "primary" {
   }
 }
 
-resource "google_compute_global_address" "demo_vamp" {
+resource "google_compute_address" "demo_vamp" {
   name = "${var.name}-vamp"
 }
 
@@ -61,7 +61,7 @@ resource "google_dns_record_set" "demo_vamp" {
 
   managed_zone = "${data.google_dns_managed_zone.demo.name}"
 
-  rrdatas = ["${google_compute_global_address.demo_vamp.address}"]
+  rrdatas = ["${google_compute_address.demo_vamp.address}"]
 }
 
 resource "google_dns_record_set" "demo_vga" {

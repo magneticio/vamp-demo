@@ -29,3 +29,35 @@ restart_vamp() {
     VAMP_POD=$(kubectl get --no-headers=true pods -o name --namespace ${DEPLOYMENT_NAMESPACE} | awk -F "/" '{print $2}' | grep vamp)
     kubectl delete pod $VAMP_POD --namespace ${DEPLOYMENT_NAMESPACE}
 }
+
+waitfor_ip() {
+    external_ip=""; while [ -z $external_ip ]; do echo "Waiting for endpoint..."; external_ip=$(kubectl get svc $1 --namespace $2 --template="{{range .status.loadBalancer.ingress}}{{.ip}}{{end}}"); [ -z "$external_ip" ] && sleep 10; done;
+}
+
+# Vamp
+vamp_login() {
+    name=${1:-vamp}
+    export VAMP_HOST="http://$name.demo.vamp.cloud:8080"
+    export VAMP_NAMESPACE="6d1339c7c7a1ac54246a57320bb1dd15176ce29"
+
+    echo "Login to Vamp ($VAMP_HOST)"
+    vamp login -u admin
+}
+
+vamp_deploy() {
+    file=${1}
+    name=${2}
+
+    sed -e "s|__NAME__|${NAME}|g" $file > ${TEMP_DIR}/${name}.yml
+
+    vamp deploy -f ${TEMP_DIR}/${name}.yml $name
+}
+
+vamp_create() {
+    artifact=${1}
+    file=${2}
+
+    sed -e "s|__NAME__|${NAME}|g" $file > ${TEMP_DIR}/artifact.yml
+
+    vamp create $artifact -f ${TEMP_DIR}/artifact.yml
+}

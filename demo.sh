@@ -8,13 +8,16 @@ yellow=$(tput setaf 3)
 name="vamp"
 cloud="local"
 environment="demo"
-version="1.1.1"
+version="1.1.2"
+demo=""
 
 function parse_command_line() {
     flag_help=0
     flag_create=0
     flag_update=0
+    flag_deploy=0
     flag_destroy=0
+    flag_skip_cluster=0
 
     for key in "$@"
     do
@@ -31,8 +34,15 @@ function parse_command_line() {
         destroy)
         flag_destroy=1
         ;;
+        deploy)
+        flag_deploy=1
+        ;;
         -n=*|--name=*)
         name="${key#*=}"
+        shift
+        ;;
+        -d=*|--demo=*)
+        demo="${key#*=}"
         shift
         ;;
         -c=*|--cloud=*)
@@ -46,6 +56,9 @@ function parse_command_line() {
         -v=*|--version=*)
         version="${key#*=}"
         shift
+        ;;
+        --skip-cluster)
+        flag_skip_cluster=1
         ;;
         *)
         ;;
@@ -73,12 +86,10 @@ function create {
         set +e
     fi
 
-    ./scripts/deploy-vamp.sh $cloud $name $environment $version
+    ./scripts/deploy-vamp.sh $cloud $version
     
     if [ $cloud != "local" ]; then
-        echo "Vamp URL: http://$name.demo.vamp.cloud"
-        echo "Waiting until available..."
-        while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' $name.demo.vamp.cloud)" != "200" ]]; do sleep 5s; done
+        echo "Vamp URL: http://$name.demo.vamp.cloud:8080"
     else
         echo "Run: kubectl proxy"
         echo "Vamp URL: http://localhost:8001/api/v1/namespaces/default/services/vamp:/proxy/#"
@@ -93,7 +104,16 @@ function update {
         source ./scripts/import-cluster-$cloud.sh $name
         set +e
     fi
-    ./scripts/update-vamp.sh $cloud $name $environment $version
+    ./scripts/update-vamp.sh $cloud $version
+}
+
+function deploy {
+    echo "Deploying demo '$demo'"
+    if [ $demo != "" ]; then
+        ./demos/$demo/deploy.sh $name
+    fi
+    echo "Deployed demo '$demo'"
+    rm -rf ./temp
 }
 
 function destroy {
@@ -117,6 +137,10 @@ fi
 
 if [ ${flag_update} -eq 1 ]; then
     update
+fi
+
+if [ ${flag_deploy} -eq 1 ]; then
+    deploy
 fi
 
 if [ ${flag_destroy} -eq 1 ]; then

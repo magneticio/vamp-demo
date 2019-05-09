@@ -44,7 +44,7 @@ spec:
           containerPort: 80
         env:
         - name: VAMP_NAMESPACE
-          value: __VAMP_NAMESPACE__
+          value: 6d1339c7c7a1ac54246a57320bb1dd15176ce29
         - name: VAMP_KEY_VALUE_STORE_TYPE
           value: vault
         - name: VAMP_KEY_VALUE_STORE_TOKEN
@@ -52,7 +52,7 @@ spec:
         - name: VAMP_KEY_VALUE_STORE_CONNECTION
           value: http://vault.default.svc.cluster.local:8200
         - name: VAMP_KEY_VALUE_STORE_PATH
-          value: /secret/vamp/vampio-__VAMP_ORGANIZATION__-__VAMP_ENVIRONMENT__/gateways/haproxy/1.8/configuration
+          value: /secret/vamp/vampio-organization-environment/gateways/haproxy/1.8/configuration
         - name: VAMP_ELASTICSEARCH_URL
           value: http://elasticsearch.default.svc.cluster.local:9200
         resources:

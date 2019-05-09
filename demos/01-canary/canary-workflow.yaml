@@ -1,6 +1,7 @@
 kind: workflows
 name: canary
 breed: canary
+status: suspended
 schedule: daemon
 environment_variables:
   PERIOD  : 15

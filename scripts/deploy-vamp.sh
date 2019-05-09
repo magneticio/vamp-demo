@@ -1,8 +1,9 @@
 #!/bin/bash
 CLOUD=${1:-gcloud}
-ORGANIZATION=${2:-vamp}
-ENVIRONMENT=${3:-demo}
-VAMP_VERSION=${4:-1.1.1}
+VAMP_VERSION=${2:-1.1.2}
+ORGANIZATION=${3:-organization}
+ENVIRONMENT=${4:-environment}
+
 
 KUBERNETES_NAMESPACE="default"
 
@@ -52,9 +53,13 @@ fi
 # Force a restart of Vamp
 restart_vamp ${KUBERNETES_NAMESPACE}
 
-source ./scripts/import-vamp.sh ${ORGANIZATION} ${ENVIRONMENT}
-
 deploy vamp-gateway-agent vampio-${ORGANIZATION}-${ENVIRONMENT}
 kubectl rollout status deployment/vamp-gateway-agent --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT}
+
+# Wait until Vamp is available
+echo "Wait for Vamp"
+waitfor_ip vamp ${KUBERNETES_NAMESPACE}
+echo "Wait for Vamp Gateway Agent"
+waitfor_ip vamp-gateway-agent vampio-${ORGANIZATION}-${ENVIRONMENT}
 
 rm -rf $TEMP_DIR
