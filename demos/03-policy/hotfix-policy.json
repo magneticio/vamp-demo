@@ -1,6 +1,6 @@
 {
     "name": "hotfix",
-    "gracePeriod": "2m",
+    "gracePeriod": "1m",
     "steps": [
       {
         "duration": "30s",
@@ -8,7 +8,7 @@
         "target": { "weight": 0 }
       },
       {
-        "duration": "2m",
+        "duration": "1m",
         "source": { "weight": 100 },
         "target": {
           "weight": 0,
@@ -20,6 +20,11 @@
         "duration": "2m",
         "source": { "weight": 50 },
         "target": { "weight": 50 }
+      },
+      {
+        "duration": "30s",
+        "source": { "weight": 20 },
+        "target": { "weight": 80 }
       },
       {
         "source": { "weight": 0 },

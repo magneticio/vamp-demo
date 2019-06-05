@@ -12,6 +12,18 @@ _* Not needed for local usage_
 
 > Note: Currently only MacOS 10.14+ is tested
 
+## Demos
+
+### 03: Release Policies
+This demostrates the usage of releasing service using custom release policies.
+
+[Guide](./demos/03-policy/README.md)
+[Resources](./demos/03-policy)
+
+```sh
+./demo.sh deploy -d=03-policy
+```
+
 ## Clouds
 
 ### Local

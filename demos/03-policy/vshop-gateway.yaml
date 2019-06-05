@@ -3,6 +3,7 @@ kind: gateways
 deployed: false
 metadata:
   "release.vamp.io/policy": "hotfix"
+  "release.vamp.io/current": "(1.0.0)"
 virtual_hosts: 
  - vshop-policy.__NAME__.demo.vamp.cloud
 selector: label(app)(vshop-policy) && label(version)((.*))

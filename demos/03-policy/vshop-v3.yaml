@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vshop-policy-v3
+  namespace: vampio-organization-environment
+spec:
+  selector:
+    matchLabels:
+      app: vshop-policy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vshop-policy
+        version: 2.0.1
+    spec:
+      containers:
+      - name: vshop
+        image: magneticio/simpleservice:2.0.11
+        ports:
+        - containerPort: 9191
+          protocol: TCP
+        env:
+        - name: SHOP_VERSION
+          value: "2"
+        - name: MaximumRequestPerSecond
+          value: "10000"
+        - name: GET_FEEDBACK
+          value: "no"
+        - name: TimeOutInXthRequest
+          value: "-1"
+        - name: VAMP_ELASTICSEARCH_URL
+          value: "http://elasticsearch.default.svc.cluster.local:9200"
+        resources:
+          requests:
+            cpu: 0.5
+            memory: 512
+            
