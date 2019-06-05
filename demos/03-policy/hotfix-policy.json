@@ -1,0 +1,56 @@
+{
+    "name": "hotfix",
+    "gracePeriod": "2m",
+    "steps": [
+      {
+        "duration": "30s",
+        "source": { "weight": 100 },
+        "target": { "weight": 0 }
+      },
+      {
+        "duration": "2m",
+        "source": { "weight": 100 },
+        "target": {
+          "weight": 0,
+          "condition": "user-agent = iPhone",
+          "conditionStrength": 100
+        }
+      },
+      {
+        "duration": "2m",
+        "source": { "weight": 50 },
+        "target": { "weight": 50 }
+      },
+      {
+        "source": { "weight": 0 },
+        "target": { "weight": 100 }
+      }
+    ],
+    "metrics": [
+      {
+        "name": "health",
+        "value": {
+          "source": "es",
+          "index": "vamp-pulse-{namespace}-health-*",
+          "tags": [
+            "health",
+            "gateways:{gateway}",
+            "routes:{target_route}"
+          ]
+        }
+      }
+    ],
+    "baselines": [
+      {
+        "name": "health",
+        "metric": "health",
+        "value": 0.97
+      }
+    ],
+    "conditions": [
+      {
+        "value": "health >= baselines.health",
+        "gracePeriod": "1m"
+      }
+    ]
+  }

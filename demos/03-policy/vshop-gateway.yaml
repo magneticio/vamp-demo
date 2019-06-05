@@ -1,0 +1,8 @@
+name: vshop-policy
+kind: gateways
+deployed: false
+metadata:
+  "release.vamp.io/policy": "hotfix"
+virtual_hosts: 
+ - vshop-policy.__NAME__.demo.vamp.cloud
+selector: label(app)(vshop-policy) && label(version)((.*))

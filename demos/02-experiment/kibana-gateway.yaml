@@ -1,4 +1,6 @@
 name: kibana
+kind: gateways
+deployed: false
 port: 5601/http
 sticky: route
 virtual_hosts: [kibana.__NAME__.demo.vamp.cloud]
