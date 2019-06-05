@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vshop-policy-v1
+  namespace: vampio-organization-environment
 spec:
   selector:
     matchLabels:
@@ -34,4 +35,3 @@ spec:
           requests:
             cpu: 0.5
             memory: 512
-            
