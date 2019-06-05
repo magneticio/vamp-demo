@@ -17,8 +17,8 @@ _* Not needed for local usage_
 ### 03: Release Policies
 This demostrates the usage of releasing service using custom release policies.
 
-[Guide](./demos/03-policy/README.md)
-[Resources](./demos/03-policy)
+* [Guide](./demos/03-policy/README.md)
+* [Resources](./demos/03-policy)
 
 ```sh
 ./demo.sh deploy -d=03-policy

@@ -27,6 +27,8 @@ spec:
           value: "10000"
         - name: GET_FEEDBACK
           value: "no"
+        - name: TimeOutEnabledIfRequestCountIsHigherThanXPer5Seconds
+          value: "5"
         - name: TimeOutInXthRequest
           value: "2"
         - name: VAMP_ELASTICSEARCH_URL

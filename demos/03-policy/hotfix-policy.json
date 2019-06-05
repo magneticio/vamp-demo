@@ -40,7 +40,7 @@
           "tags": [
             "health",
             "gateways:{gateway}",
-            "routes:{target_route}"
+            "routes:({target_route})"
           ]
         }
       }
