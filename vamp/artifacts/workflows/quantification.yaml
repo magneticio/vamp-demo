@@ -6,6 +6,11 @@ scale:
   cpu: 0.1
   memory: 256MB
   instances: 1
+environment_variables:
+  VAMP_WORKFLOW_EXECUTION_TIMEOUT     : 10
+  VAMP_WORKFLOW_EXECUTION_PERIOD      : 10
+  VAMP_HEALTH_TIME_WINDOW             : 30
+  VAMP_METRICS_TIME_WINDOW            : 30
 dialects:
   kubernetes:
     imagePullSecrets:

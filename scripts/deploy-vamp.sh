@@ -1,6 +1,6 @@
 #!/bin/bash
 CLOUD=${1:-gcloud}
-VAMP_VERSION=${2:-1.1.2}
+VAMP_VERSION=${2:-1.1.3}
 ORGANIZATION=${3:-organization}
 ENVIRONMENT=${4:-environment}
 
@@ -30,18 +30,13 @@ deploy vamp
 kubectl rollout status deployment/vamp --namespace=${KUBERNETES_NAMESPACE}
 
 # Configure Vamp
-echo "Start port forwarding"
-kubectl port-forward svc/mysql 3306:3306 --namespace ${KUBERNETES_NAMESPACE} &
-kubectl port-forward svc/vault 8200:8200 --namespace ${KUBERNETES_NAMESPACE} &
-
-sleep 5
+forklift_connect
 
 forklift create organization ${ORGANIZATION} --file ./vamp/organization-config.yaml --config ./vamp/forklift-config.yaml
 forklift create user admin --role admin --organization ${ORGANIZATION} --config ./vamp/forklift-config.yaml
 forklift create environment ${ENVIRONMENT} --organization ${ORGANIZATION} --config ./vamp/forklift-config.yaml --file ./vamp/environment-config.yaml --artifacts ./vamp/artifacts
 
-echo "Stop port forwarding"
-pkill -f kubectl
+forklift_disconnect
 
 # Create Kubernetes Namespace
 VAMP_NAMESPACE=$(kubectl get --no-headers=true namespace -o name | awk -F "/" '{print $2}' | grep vampio-${ORGANIZATION}-${ENVIRONMENT})
@@ -57,9 +52,11 @@ deploy vamp-gateway-agent vampio-${ORGANIZATION}-${ENVIRONMENT}
 kubectl rollout status deployment/vamp-gateway-agent --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT}
 
 # Wait until Vamp is available
-echo "Wait for Vamp"
-waitfor_ip vamp ${KUBERNETES_NAMESPACE}
-echo "Wait for Vamp Gateway Agent"
-waitfor_ip vamp-gateway-agent vampio-${ORGANIZATION}-${ENVIRONMENT}
+if [ $CLOUD != "local" ]; then
+    echo "Wait for Vamp"
+    waitfor_ip vamp ${KUBERNETES_NAMESPACE}
+    echo "Wait for Vamp Gateway Agent"
+    waitfor_ip vamp-gateway-agent vampio-${ORGANIZATION}-${ENVIRONMENT}
+fi
 
 rm -rf $TEMP_DIR

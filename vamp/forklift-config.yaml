@@ -9,3 +9,4 @@ key-value-store-url: http://localhost:8200
 key-value-store-token: vamp
 key-value-store-base-path: /secret/vamp/${namespace}
 key-value-store-type: vault
+release-policies-path: /workflows/release/policies/

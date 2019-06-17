@@ -8,8 +8,12 @@ yellow=$(tput setaf 3)
 name="vamp"
 cloud="local"
 environment="demo"
-version="1.1.2"
+version="1.1.3"
 demo=""
+
+if [ -f "./.env.sh" ]; then
+    source ./.env.sh
+fi
 
 function parse_command_line() {
     flag_help=0
@@ -87,6 +91,8 @@ function create {
     fi
 
     ./scripts/deploy-vamp.sh $cloud $version
+
+    echo "export cloud=$cloud && export name=$name" >> ./.env.sh && chmod +x ./.env.sh
     
     if [ $cloud != "local" ]; then
         echo "Vamp URL: http://$name.demo.vamp.cloud:8080"
@@ -110,7 +116,7 @@ function update {
 function deploy {
     echo "Deploying demo '$demo'"
     if [ $demo != "" ]; then
-        ./demos/$demo/deploy.sh $name
+        ./demos/$demo/deploy.sh $name $cloud
     fi
     echo "Deployed demo '$demo'"
     rm -rf ./temp
@@ -123,6 +129,7 @@ function destroy {
     else
         ./scripts/delete-vamp.sh $cloud
     fi
+    rm ./.env.sh
 }
 
 parse_command_line $@

@@ -35,9 +35,44 @@ waitfor_ip() {
 }
 
 # Vamp
+vamp_connect() {
+    cloud=${1:-local}
+    if [ $cloud == "local" ]; then
+        echo "Start port forwarding"
+        kubectl port-forward svc/vamp 8080:8080 --namespace ${KUBERNETES_NAMESPACE} &
+        sleep 5
+    fi
+} 
+
+vamp_disconnect() {
+    cloud=${1:-local}
+    if [ $cloud == "local" ]; then
+        echo "Stop port forwarding"
+        pkill -f kubectl
+    fi
+}
+
+forklift_connect() {
+    echo "Start port forwarding"
+    kubectl port-forward svc/mysql 3306:3306 --namespace ${KUBERNETES_NAMESPACE} &
+    kubectl port-forward svc/vault 8200:8200 --namespace ${KUBERNETES_NAMESPACE} &
+
+    sleep 5
+}
+
+forklift_disconnect() {
+    echo "Stop port forwarding"
+    pkill -f kubectl
+}
+
 vamp_login() {
     name=${1:-vamp}
-    export VAMP_HOST="http://$name.demo.vamp.cloud:8080"
+    cloud=${2:-local}
+    if [ $cloud != "local" ]; then
+        export VAMP_HOST="http://$name.demo.vamp.cloud:8080"
+    else
+        export VAMP_HOST="http://localhost:8080"
+    fi
     export VAMP_NAMESPACE="6d1339c7c7a1ac54246a57320bb1dd15176ce29"
 
     echo "Login to Vamp ($VAMP_HOST)"
