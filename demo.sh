@@ -8,7 +8,7 @@ yellow=$(tput setaf 3)
 name="vamp"
 cloud="local"
 environment="demo"
-version="1.1.3"
+version="1.1.4"
 demo=""
 
 if [ -f "./.env.sh" ]; then
