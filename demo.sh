@@ -76,10 +76,13 @@ function print_help() {
     echo "${yellow}  create                ${green}Creates a fresh environment.${reset}"
     echo "${yellow}  update                ${green}Updates an environment.${reset}"
     echo "${yellow}  destroy               ${green}Destroys an environment.${reset}"
+    echo "${yellow}  deploy                ${green}Deploys a demo into the environment.${reset}"
     echo "${yellow}  -n=*|--name=*         ${green}Specifying the name. Defaults to '$name'.${reset}"
     echo "${yellow}  -c=*|--cloud=*        ${green}Specifying which cloud provider to user (local, gcloud). Defaults to '$cloud'.${reset}"
     echo "${yellow}  -e=*|--environment=*  ${green}Specifying the name of the environment. Defaults to '$environment'.${reset}"
     echo "${yellow}  -v=*|--version=*      ${green}Specifying the version of Vamp which will be deployed. Defaults to '$version'.${reset}"
+    echo "${yellow}  -d=*|--demo=*         ${green}Specifying the demo to deploy into the environment.${reset}"
+    echo "${yellow}  --skip-cluster        ${green}Skips the creation of cluster resources.${reset}"
 }
 
 function create {
