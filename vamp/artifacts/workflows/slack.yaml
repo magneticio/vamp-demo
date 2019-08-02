@@ -1,6 +1,0 @@
-kind: workflows
-name: slack-agent
-breed: slack-agent
-schedule: daemon
-environment_variables:
-  MESSAGE_TITLE: Demo
