@@ -148,4 +148,4 @@ kubectl delete -f ./demos/04-particles/particles-v1.1.0.yaml --namespace vampio-
 kubectl delete -f ./demos/04-particles/particles-v1.1.1.yaml --namespace vampio-organization-environment
 ```
 
-Next you should in Vamp set the `particles` gateway `release.vamp.io/current` back to `(1.0.0)`.
+Next you should in Vamp set the `particles` gateway `release.vamp.io/current` back to `(1.0.0)` and the weight of route `(1.0.0)` to 100%.
