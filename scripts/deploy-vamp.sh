@@ -18,6 +18,12 @@ kubectl rollout status deployment/vault --namespace=${KUBERNETES_NAMESPACE}
 kubectl rollout status deployment/elasticsearch --namespace=${KUBERNETES_NAMESPACE}
 kubectl rollout status deployment/nats-streaming --namespace=${KUBERNETES_NAMESPACE}
 
+# Deploy Helm
+if ! type "helm" > /dev/null 2>&1; then
+    kubectl apply -f ./kubernetes/helm.yaml
+    helm init --service-account helm
+fi
+
 REGSECRET=$(kubectl get --no-headers=true secret -o name --namespace=${KUBERNETES_NAMESPACE} | awk -F "/" '{print $2}' | grep regsecret)
 if [ -z $REGSECRET ]; then
     echo "Secret 'regsecret' not found. Please login to Docker Hub..."

@@ -1,0 +1,13 @@
+name: particles
+kind: gateways
+deployed: false
+metadata:
+  release.vamp.io/policy: patch
+  release.vamp.io/policy/selector: semver
+  release.vamp.io/policy/semver/default: patch
+  release.vamp.io/policy/semver/patch: patch
+  release.vamp.io/policy/semver/minor: minor
+  release.vamp.io/current: "(1.0.0)"
+virtual_hosts: 
+ - particles.__NAME__.demo.vamp.cloud
+selector: label(app)(particles) && label(version)((.*))

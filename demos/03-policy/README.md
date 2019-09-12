@@ -9,10 +9,8 @@ For this demo it's required to have the Vamp Release Agent running as workflow. 
 We deploy the initial state of the demo using the `demo.sh` shell script and specify the environment name.
 
 ```sh
-./demo.sh deploy -d=03-policy -n={name}
+./demo.sh deploy -d=03-policy
 ```
-
-Navigate to the Release Agent UI and add the [hotfix-policy.json](hotfix-policy.json) to the release agent.
 
 Verify if the vshop application is running at `http://vshop-policy.{name}.demo.vamp.cloud`
 

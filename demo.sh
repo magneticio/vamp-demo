@@ -20,6 +20,7 @@ function parse_command_line() {
     flag_create=0
     flag_update=0
     flag_deploy=0
+    flag_undeploy=0
     flag_destroy=0
     flag_skip_cluster=0
 
@@ -40,6 +41,9 @@ function parse_command_line() {
         ;;
         deploy)
         flag_deploy=1
+        ;;
+        undeploy)
+        flag_undeploy=1
         ;;
         -n=*|--name=*)
         name="${key#*=}"
@@ -77,6 +81,7 @@ function print_help() {
     echo "${yellow}  update                ${green}Updates an environment.${reset}"
     echo "${yellow}  destroy               ${green}Destroys an environment.${reset}"
     echo "${yellow}  deploy                ${green}Deploys a demo into the environment.${reset}"
+    echo "${yellow}  undeploy              ${green}Removes a demo from the environment.${reset}"
     echo "${yellow}  -n=*|--name=*         ${green}Specifying the name. Defaults to '$name'.${reset}"
     echo "${yellow}  -c=*|--cloud=*        ${green}Specifying which cloud provider to user (local, gcloud). Defaults to '$cloud'.${reset}"
     echo "${yellow}  -e=*|--environment=*  ${green}Specifying the name of the environment. Defaults to '$environment'.${reset}"
@@ -125,6 +130,15 @@ function deploy {
     rm -rf ./temp
 }
 
+function undeploy {
+    echo "Removing demo '$demo'"
+    if [ $demo != "" ]; then
+        ./demos/$demo/undeploy.sh $name $cloud
+    fi
+    echo "Removed demo '$demo'"
+    rm -rf ./temp
+}
+
 function destroy {
     echo "Destroying environment '$name' on cloud '$cloud'"
     if [ $cloud != "local" ]; then
@@ -151,6 +165,10 @@ fi
 
 if [ ${flag_deploy} -eq 1 ]; then
     deploy
+fi
+
+if [ ${flag_undeploy} -eq 1 ]; then
+    undeploy
 fi
 
 if [ ${flag_destroy} -eq 1 ]; then

@@ -72,5 +72,11 @@ spec:
             memory: 1024
         securityContext:
           privileged: false
+        livenessProbe:
+          exec:
+            command:
+            - ./healthcheck.sh
+          initialDelaySeconds: 5
+          periodSeconds: 5
       imagePullSecrets:
         - name: regsecret
