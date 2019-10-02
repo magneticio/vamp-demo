@@ -49,6 +49,8 @@ Deploy the `1.0.1` version of the application using the Kubernetes CLI.
 
 ```sh
 kubectl apply -f ./demos/04-particles/particles-v1.0.1.yaml
+# Google Cloud
+kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/04-particles/particles-v1.0.1.yaml
 ```
 
 During the release you can show two urls `http://particles.{name}.demo.vamp.cloud` and `http://particles.{name}.demo.vamp.cloud/user/a`. The last URL demonstrated the ability to segment users/tenants and release new version to a small subset of users.
@@ -65,6 +67,8 @@ Deploy the `1.1.0` version of the application using the Kubernetes CLI.
 
 ```sh
 kubectl apply -f ./demos/04-particles/particles-v1.1.0.yaml
+# Google Cloud
+kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/04-particles/particles-v1.1.0.yaml
 ```
 
 This deployment as configured an error rate which simulates that 50% of the calls towards the backend are failing. During the release this should result in the behavior that the release is being rolled back as soon as the application reports itself unhealthy.
@@ -78,6 +82,8 @@ The last step is the fix the problem by removing the error rate from the deploym
 
 ```sh
 kubectl apply -f ./demos/04-particles/particles-v1.1.1.yaml
+# Google Cloud
+kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/04-particles/particles-v1.1.1.yaml
 ```
 
 ![v1.1.1 Tenant](images/v1.1.1-tenant.png)
@@ -146,6 +152,10 @@ If for some reason the CLI isn't an option you delete all Kubernetes deployments
 kubectl delete -f ./demos/04-particles/particles-v1.0.1.yaml --namespace vampio-organization-environment
 kubectl delete -f ./demos/04-particles/particles-v1.1.0.yaml --namespace vampio-organization-environment
 kubectl delete -f ./demos/04-particles/particles-v1.1.1.yaml --namespace vampio-organization-environment
+# Google Cloud
+kubectl delete -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/04-particles/particles-v1.0.1.yaml
+kubectl delete -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/04-particles/particles-v1.1.0.yaml
+kubectl delete -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/04-particles/particles-v1.1.1.yaml
 ```
 
 Next you should in Vamp set the `particles` gateway `release.vamp.io/current` back to `(1.0.0)` and the weight of route `(1.0.0)` to 100%.
