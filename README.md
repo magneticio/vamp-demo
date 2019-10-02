@@ -83,12 +83,14 @@ The `demo.sh` script is used to create, update, deploy and destroy the environme
 
 ### Commands
 
-| Command | Description                                               | Example                                    |
-| ------- | --------------------------------------------------------- | ------------------------------------------ |
-| create  | Creates a new demo environment                            | ./demo.sh create -c=gcloud -n=vamp\$RANDOM |
-| update  | Updates the demo environment's resources and installation | ./demo.sh update                           |
-| destroy | Destroys the demo environment and created cluster         | ./demo.sh destroy                          |
-| deploy  | Deploys a demo into the demo environment                  | ./demo.sh deploy -d=01-canary              |
+| Command  | Description                                               | Example                                    |
+| -------- | --------------------------------------------------------- | ------------------------------------------ |
+| create   | Creates a new demo environment                            | ./demo.sh create -c=gcloud -n=vamp\$RANDOM |
+| update   | Updates the demo environment's resources and installation | ./demo.sh update                           |
+| destroy  | Destroys the demo environment and created cluster         | ./demo.sh destroy                          |
+| deploy   | Deploys a demo into the demo environment                  | ./demo.sh deploy -d=01-canary              |
+| run      | Runs a demo                                               | ./demo.sh run -d=04-policies               |
+| undeploy | Removes a demo from the demo environment                  | ./demo.sh undeploy -d=01-canary            |
 
 ### Parameters
 
