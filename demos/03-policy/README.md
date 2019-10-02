@@ -30,6 +30,8 @@ Deploy a new version of the VShop service using the Kubernetes CLI.
 
 ```sh
 kubectl apply -f ./demos/03-policy/vshop-v2.yaml
+# Google Cloud
+kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/03-policy/vshop-v2.yaml
 ```
 
 Once version 2.0.0 services 50% of the traffic, it will start reporting unhealthy. Because of this, the policy will fail the release and restore the traffic to version 1.0.0
@@ -42,6 +44,8 @@ Deploy a new version `2.0.1` of the VShop service using the Kubernetes CLI.
 
 ```sh
 kubectl apply -f ./demos/03-policy/vshop-v3.yaml
+# Google Cloud
+kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/03-policy/vshop-v3.yaml
 ```
 
 You will see that the release is advancing with no problems and that eventually the new service is the currently released version of the service.
