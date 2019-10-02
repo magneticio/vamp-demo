@@ -10,6 +10,7 @@ We deploy the initial state of the demo using the `demo.sh` shell script and spe
 
 ```sh
 ./demo.sh deploy -d=04-particles
+./demo.sh run -d=04-particles
 ```
 
 Verify if the application is running at `http://particles.{name}.demo.vamp.cloud`.
@@ -35,8 +36,8 @@ We are setting different colors and shapes for each version. This way we can dem
 For the release of this application we have defined the following release policy.
 
 - All the traffic is on the current version and non of the traffic on the new version for 30 seconds.
-- Only traffic for `user a` goes the new version, but all other traffic remains on the current version for 1 minute.
-- Only traffic for `user a` and 50% of all the other traffic goes the new version of 1 minute.
+- When a minor release, only traffic for `user a` goes the new version, but all other traffic remains on the current version for 1 minute.
+- Only 50% of all the other traffic goes the new version of 1 minute.
 - All traffic will go to the new version.
 
 Show the [Release Policy](policy-patch.json) and explain the policy.
@@ -53,9 +54,8 @@ kubectl apply -f ./demos/04-particles/particles-v1.0.1.yaml
 kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/04-particles/particles-v1.0.1.yaml
 ```
 
-During the release you can show two urls `http://particles.{name}.demo.vamp.cloud` and `http://particles.{name}.demo.vamp.cloud/user/a`. The last URL demonstrated the ability to segment users/tenants and release new version to a small subset of users.
+During the release you can show the url `http://particles.{name}.demo.vamp.cloud`.
 
-![v1.0.1 Tenant](images/v1.0.1-tenant.png)
 ![v1.0.1 Half](images/v1.0.1-half.png)
 ![v1.0.1 All](images/v1.0.1-all.png)
 
@@ -73,6 +73,8 @@ kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/d
 
 This deployment as configured an error rate which simulates that 50% of the calls towards the backend are failing. During the release this should result in the behavior that the release is being rolled back as soon as the application reports itself unhealthy.
 
+Show the url `http://particles.{name}.demo.vamp.cloud/user/a`. demonstrated the ability to segment users/tenants and release new version to a small subset of users.
+
 ![v1.1.0 Tenant](images/v1.1.0-tenant.png)
 ![v1.0.1 All](images/v1.0.1-all.png)
 
@@ -86,7 +88,6 @@ kubectl apply -f ./demos/04-particles/particles-v1.1.1.yaml
 kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/04-particles/particles-v1.1.1.yaml
 ```
 
-![v1.1.1 Tenant](images/v1.1.1-tenant.png)
 ![v1.1.1 Half](images/v1.1.1-half.png)
 ![v1.1.1 All](images/v1.1.1-all.png)
 

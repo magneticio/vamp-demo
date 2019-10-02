@@ -3,12 +3,16 @@
   "gracePeriod": "1m",
   "steps": [
     {
-      "duration": "30s",
+      "endAfter": {
+        "value": "duration == 30s"
+      },
       "source": { "weight": 100 },
       "target": { "weight": 0 }
     },
     {
-      "duration": "1m",
+      "endAfter": {
+        "value": "duration == baselines.maxDuration"
+      },
       "source": { "weight": 100 },
       "target": {
         "weight": 0,
@@ -17,7 +21,9 @@
       }
     },
     {
-      "duration": "1m",
+      "endAfter": {
+        "value": "duration == baselines.maxDuration"
+      },
       "source": { "weight": 50 },
       "target": {
         "weight": 50,
@@ -26,6 +32,9 @@
       }
     },
     {
+      "endAfter": {
+        "value": "duration == baselines.maxDuration"
+      },
       "source": { "weight": 0 },
       "target": { "weight": 100 }
     }
@@ -45,12 +54,16 @@
       "name": "health",
       "metric": "health",
       "value": 0.97
+    },
+    {
+      "name": "maxDuration",
+      "value": "1m"
     }
   ],
   "conditions": [
     {
       "value": "health >= baselines.health",
-      "gracePeriod": "1m"
+      "gracePeriod": "30s"
     }
   ]
 }

@@ -1,7 +1,7 @@
 name: release
 kind: breeds
 deployable:
-  definition: magneticio/vamp-release-agent:1.3.0
+  definition: magneticio/vamp-release-agent:2.0.0-preview2
 ports:
   webport: 8000/http
 environment_variables:
