@@ -96,3 +96,11 @@ vamp_create() {
 
     vamp create $artifact -f ${TEMP_DIR}/artifact.yml
 }
+
+gateway_connect() {
+    service=${1}
+    port=${2}
+
+    echo "Start port forwarding"
+    kubectl port-forward svc/$service $port:$port --namespace ${KUBERNETES_NAMESPACE}
+}

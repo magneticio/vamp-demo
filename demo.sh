@@ -20,6 +20,7 @@ function parse_command_line() {
     flag_create=0
     flag_update=0
     flag_deploy=0
+    flag_run=0
     flag_undeploy=0
     flag_destroy=0
     flag_skip_cluster=0
@@ -41,6 +42,9 @@ function parse_command_line() {
         ;;
         deploy)
         flag_deploy=1
+        ;;
+        run)
+        flag_run=1
         ;;
         undeploy)
         flag_undeploy=1
@@ -81,6 +85,7 @@ function print_help() {
     echo "${yellow}  update                ${green}Updates an environment.${reset}"
     echo "${yellow}  destroy               ${green}Destroys an environment.${reset}"
     echo "${yellow}  deploy                ${green}Deploys a demo into the environment.${reset}"
+    echo "${yellow}  run                   ${green}Runs a demo.${reset}"
     echo "${yellow}  undeploy              ${green}Removes a demo from the environment.${reset}"
     echo "${yellow}  -n=*|--name=*         ${green}Specifying the name. Defaults to '$name'.${reset}"
     echo "${yellow}  -c=*|--cloud=*        ${green}Specifying which cloud provider to user (local, gcloud). Defaults to '$cloud'.${reset}"
@@ -130,6 +135,15 @@ function deploy {
     rm -rf ./temp
 }
 
+function run {
+    echo "Run demo '$demo'"
+    if [ $demo != "" ]; then
+        ./demos/$demo/run.sh $name $cloud
+    fi
+    echo "Stopping demo '$demo'"
+    rm -rf ./temp
+}
+
 function undeploy {
     echo "Removing demo '$demo'"
     if [ $demo != "" ]; then
@@ -165,6 +179,10 @@ fi
 
 if [ ${flag_deploy} -eq 1 ]; then
     deploy
+fi
+
+if [ ${flag_run} -eq 1 ]; then
+    run
 fi
 
 if [ ${flag_undeploy} -eq 1 ]; then
