@@ -99,7 +99,7 @@ The `demo.sh` script is used to create, update, deploy and destroy the environme
 | -c/--cloud     | Specifies the cloud where the Kubernetes cluster will be created                             | ./demo.sh create -c=gcloud                 |
 | -n/--name      | Specifies the name which is used in the demos and generated URLs                             | ./demo.sh create -c=gcloud -n=vamp\$RANDOM |
 | -v/--version   | Specifies the Vamp version which will be deployed in the environment. Defaults to the latest | ./demo.sh create -v=ci-750-master          |
-| -d/--demo      | Specifies the demo which will be deployed to the demo enviroment                             | ./demo.sh deploy -d=01-canary              |
+| -d/--demo      | Specifies the demo which will be deployed to the demo environment                            | ./demo.sh deploy -d=01-canary              |
 | --skip-cluster | Skips the creation of a cluster and goes directly to deploying Vamp                          | ./demo.sh deploy -c=gcloud --skip-cluster  |
 
 ## Teardown
