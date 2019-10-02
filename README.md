@@ -37,9 +37,8 @@ Used Google Cloud's GKE (Google Kubernetes Engine) for cluster creation.
 
 ### 01: Canary Release
 
-This demostrates a canary release using a scripted Vamp workflow.
+This demonstrates a canary release using a scripted Vamp workflow.
 
-- [Guide](./demos/01-canary/README.md)
 - [Resources](./demos/01-canary)
 
 ```sh
@@ -48,9 +47,8 @@ This demostrates a canary release using a scripted Vamp workflow.
 
 ### 02: A/B Experiment
 
-This demostrates how to perform a A/B Test driven release with custom metrics
+This demonstrates how to perform a A/B Test driven release with custom metrics
 
-- [Guide](./demos/02-policy/README.md)
 - [Resources](./demos/02-experiment)
 
 ```sh
@@ -59,13 +57,24 @@ This demostrates how to perform a A/B Test driven release with custom metrics
 
 ### 03: Release Policies
 
-This demostrates the usage of releasing service using custom release policies.
+This demonstrates the usage of releasing service using custom release policies.
 
 - [Guide](./demos/03-policy/README.md)
 - [Resources](./demos/03-policy)
 
 ```sh
 ./demo.sh deploy -d=03-policy
+```
+
+### 04: Particles
+
+This visually demonstrates the usage of releasing services using custom release policies.
+
+- [Guide](./demos/04-particles/README.md)
+- [Resources](./demos/04-particles)
+
+```sh
+./demo.sh deploy -d=04-particles
 ```
 
 ## Usage
