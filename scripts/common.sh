@@ -11,9 +11,7 @@ deploy() {
     set -e
     echo "Deploying:" ${DEPLOYMENT}
     sed -e "s|__KUBERNETES_NAMESPACE__|${DEPLOYMENT_NAMESPACE}|g" ${TEMPLATE_DIR}/${DEPLOYMENT}.yml > ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|__VAMP_IP_NAME__|${VAMP_IP_NAME}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
     sed -i.bak "s|__VAMP_IP_ADDRESS__|${VAMP_IP_ADDRESS}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
-    sed -i.bak "s|__VGA_IP_NAME__|${VGA_IP_NAME}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
     sed -i.bak "s|__VGA_IP_ADDRESS__|${VGA_IP_ADDRESS}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
     sed -i.bak "s|__VAMP_VERSION__|${VAMP_VERSION}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml
     sed -i.bak "s|__VAMP_NAMESPACE__|${VAMP_NAMESPACE}|g" ${TEMP_DIR}/${DEPLOYMENT}.yml

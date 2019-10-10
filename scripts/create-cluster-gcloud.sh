@@ -4,10 +4,24 @@ set -e
 NAME=$1
 CLOUD=${2:-gcloud}
 REGION=${3:-europe-west4}
+ZONE=${4:-${REGION}-b}
+NODES=${5:-4}
+MACHINE=${6:-n1-standard-2}
 
 gcloud auth application-default login
 
-terraform init
-terraform apply -var "name=${NAME}" -var "cloud=${CLOUD}" -var "region=${REGION}"
+# Create IP Addresses
+gcloud compute addresses create ${NAME}-vamp --region ${REGION}
+gcloud compute addresses create ${NAME}-vga --region ${REGION}
 
-gcloud container clusters get-credentials ${NAME} --region ${REGION}
+# Create DNS Records
+VAMP_IP_ADDRESS=$(gcloud compute addresses describe ${NAME}-vamp --region ${REGION} | grep address: | awk '{print $2}')
+VGA_IP_ADDRESS=$(gcloud compute addresses describe ${NAME}-vga --region ${REGION} | grep address: | awk '{print $2}')
+gcloud dns record-sets transaction start --zone="demo-vamp-cloud"
+gcloud dns record-sets transaction add $VAMP_IP_ADDRESS --zone="demo-vamp-cloud" --name="${name}.demo.vamp.cloud" --type="A" --ttl="300"
+gcloud dns record-sets transaction add $VGA_IP_ADDRESS --zone="demo-vamp-cloud" --name="*.${name}.demo.vamp.cloud" --type="A" --ttl="300"
+gcloud dns record-sets transaction execute --zone="demo-vamp-cloud"
+
+# Create Cluster
+gcloud container clusters create ${NAME}-demo-ee --zone ${ZONE} --num-nodes $NODES --machine-type ${MACHINE}
+gcloud container clusters get-credentials ${NAME}-demo-ee --region ${ZONE}

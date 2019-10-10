@@ -98,7 +98,7 @@ function print_help() {
 function create {
     if [ $cloud != "local" ]; then
         set -e
-        source ./scripts/create-cluster-$cloud.sh $name
+        #source ./scripts/create-cluster-$cloud.sh $name
         source ./scripts/import-cluster-$cloud.sh $name
         set +e
     fi
@@ -156,7 +156,7 @@ function undeploy {
 function destroy {
     echo "Destroying environment '$name' on cloud '$cloud'"
     if [ $cloud != "local" ]; then
-        ./scripts/destroy-cluster.sh $cloud
+        ./scripts/destroy-cluster-$cloud.sh $name
     else
         ./scripts/delete-vamp.sh $cloud
     fi
