@@ -98,7 +98,7 @@ function print_help() {
 function create {
     if [ $cloud != "local" ]; then
         set -e
-        #source ./scripts/create-cluster-$cloud.sh $name
+        source ./scripts/create-cluster-$cloud.sh $name
         source ./scripts/import-cluster-$cloud.sh $name
         set +e
     fi
