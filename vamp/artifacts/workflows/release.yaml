@@ -3,4 +3,4 @@ name: release
 breed: release
 schedule: daemon
 environment_variables:
-  WINDOW: 30s
+  WINDOW: 15s
