@@ -3,14 +3,13 @@
 export NAME=${1:-vamp}
 export CLOUD=${2:-local}
 
-DEMOPATH=./demos/04-particles
 PORT=41004
 SERVICE=particles
 
 source ./scripts/common.sh
 
 if [ $CLOUD != "local" ]; then
-    open http://particles.$NAME.demo.vamp.cloud
+    open http://$SERVICE.$NAME.demo.vamp.cloud
 else
     echo "Start port forwarding"
     vamp_connect $CLOUD

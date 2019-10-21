@@ -40,7 +40,7 @@ For the release of this application we have defined the following release policy
 - Only 50% of all the other traffic goes the new version of 1 minute.
 - All traffic will go to the new version.
 
-Show the [Release Policy](policy-patch.json) and explain the policy.
+Show the [Patch Release Policy](policy-patch.json), [Minor Release Policy](policy-minor.json) and explain the policy.
 
 ### Patch release
 
@@ -59,7 +59,7 @@ During the release you can show the url `http://particles.{name}.demo.vamp.cloud
 ![v1.0.1 Half](images/v1.0.1-half.png)
 ![v1.0.1 All](images/v1.0.1-all.png)
 
-## Minor release
+### Minor release
 
 Now we will release a new version of the application which has a different shape and color for the particles.
 
@@ -78,7 +78,7 @@ Show the url `http://particles.{name}.demo.vamp.cloud/user/a`. demonstrated the 
 ![v1.1.0 Tenant](images/v1.1.0-tenant.png)
 ![v1.0.1 All](images/v1.0.1-all.png)
 
-## Minor patch release
+### Minor patch release
 
 The last step is the fix the problem by removing the error rate from the deployment.
 
@@ -91,23 +91,11 @@ kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/d
 ![v1.1.1 Half](images/v1.1.1-half.png)
 ![v1.1.1 All](images/v1.1.1-all.png)
 
-### Release Policy
+## Details
 
-For the release of this application we have defined the following release policy.
+### Release policies
 
-- All the traffic is on the current version and non of the traffic on the new version for 30 seconds.
-- Only traffic for `user a` goes the new version, but all other traffic remains on the current version for 1 minute.
-- Only traffic for `user a` and 50% of all the other traffic goes the new version of 1 minute.
-- All traffic will go to the new version.
-
-Show the policy file [policy-patch.json](policy-patch.json) and it's structure.
-
-**Pointer**
-
-- You can define your own steps.
-- Each step has a weight for the source version and target version.
-- You can define the metrics and baselines for a release and use that as condition to check before advancing to the next step.
-- Once a service has successfully release, there is the possibility to add a command to call a REST API to notify.
+The release policy is the concept of a document describing how a service should be released. It contains the steps, metrics, baselines and notification which acts as instruction set to orchestrate the release process of a single service in an environment.
 
 ### Vamp Gateway configuration
 
