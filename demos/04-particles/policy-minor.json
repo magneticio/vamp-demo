@@ -7,7 +7,13 @@
         "value": "duration == 30s"
       },
       "source": { "weight": 100 },
-      "target": { "weight": 0 }
+      "target": { "weight": 0 },
+      "conditions": [
+        {
+          "value": "health >= baselines.health",
+          "gracePeriod": "30s"
+        }
+      ]
     },
     {
       "endAfter": {
@@ -18,7 +24,13 @@
         "weight": 0,
         "condition": "< path_beg /user/a >",
         "conditionStrength": 100
-      }
+      },
+      "conditions": [
+        {
+          "value": "health >= baselines.health",
+          "gracePeriod": "30s"
+        }
+      ]
     },
     {
       "endAfter": {
@@ -29,14 +41,26 @@
         "weight": 50,
         "condition": "< path_beg /user/a >",
         "conditionStrength": 100
-      }
+      },
+      "conditions": [
+        {
+          "value": "health >= baselines.health",
+          "gracePeriod": "30s"
+        }
+      ]
     },
     {
       "endAfter": {
         "value": "duration == baselines.maxDuration"
       },
       "source": { "weight": 0 },
-      "target": { "weight": 100 }
+      "target": { "weight": 100 },
+      "conditions": [
+        {
+          "value": "health >= baselines.health",
+          "gracePeriod": "30s"
+        }
+      ]
     }
   ],
   "metrics": [
