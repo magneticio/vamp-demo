@@ -38,6 +38,7 @@ Used Google Cloud's GKE (Google Kubernetes Engine) for cluster creation.
 
 This demonstrates a canary release using a scripted Vamp workflow.
 
+- [Guide](./demos/01-canary/README.md)
 - [Resources](./demos/01-canary)
 
 ```sh
@@ -48,6 +49,7 @@ This demonstrates a canary release using a scripted Vamp workflow.
 
 This demonstrates how to perform a A/B Test driven release with custom metrics
 
+- [Guide](./demos/02-experiment/README.md)
 - [Resources](./demos/02-experiment)
 
 ```sh
