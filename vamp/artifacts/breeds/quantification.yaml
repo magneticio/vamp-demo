@@ -1,7 +1,7 @@
 name: quantification
 kind: breeds
 deployable:
-  definition: magneticio/vamp-ee-workflows:1.1.4-quantification
+  definition: magneticio/vamp-ee-workflows:1.2.0-quantification
 ports:
   webport: 8080/http
 environment_variables:

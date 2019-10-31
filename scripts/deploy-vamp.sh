@@ -1,6 +1,6 @@
 #!/bin/bash
 CLOUD=${1:-gcloud}
-VAMP_VERSION=${2:-1.1.4}
+VAMP_VERSION=${2:-1.2.0}
 ORGANIZATION=${3:-organization}
 ENVIRONMENT=${4:-environment}
 
