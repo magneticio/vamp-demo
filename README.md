@@ -2,7 +2,7 @@
 
 This repository contains the required infrastructure, service and artifacts to demo Vamp.
 
-> Current Version: 1.2.0
+> Current Version: 1.2.0 (untested)
 
 ## Installation
 
