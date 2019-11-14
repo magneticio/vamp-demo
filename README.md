@@ -110,3 +110,20 @@ The `demo.sh` script is used to create, update, deploy and destroy the environme
 ```sh
 ./demo.sh destroy
 ```
+
+## Vamp Health
+The Vamp Health metric is a composite of:
+- The ratio of service errors (5xx responses) to all other responses. 5xx errors are a good indication that the service is unhealthy
+- Stability of the Kubernetes Deployment. Not being able to attain or maintain the requested number of replicas is another good indication that the service is unhealthy
+- Resource utilisation. Excessive demands on CPU and memory can also be a good indicator that the service is unhealthy
+
+### Deployment Stability
+- Having the minimum replicas available
+- Variance in Pod restart count
+- Difference between requested and available replicas
+
+### Resource Utilisation
+- Total CPU utilised by all replicas
+- Total memory utilised by all replicas
+
+The current calculation is documented here: in readme for the quntification workflow
