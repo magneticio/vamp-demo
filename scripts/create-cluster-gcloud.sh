@@ -6,6 +6,7 @@ CLOUD=${2:-gcloud}
 REGION=${3:-europe-west4}
 ZONE=${4:-${REGION}-b}
 NODES=${5:-4}
+MAX_NODES=8
 MACHINE=${6:-n1-standard-2}
 
 gcloud auth application-default login
@@ -23,5 +24,6 @@ gcloud dns record-sets transaction add $VGA_IP_ADDRESS --zone="demo-vamp-cloud" 
 gcloud dns record-sets transaction execute --zone="demo-vamp-cloud"
 
 # Create Cluster
-gcloud container clusters create ${NAME}-demo-ee --zone ${ZONE} --num-nodes $NODES --machine-type ${MACHINE}
+# gcloud container clusters create ${NAME}-demo-ee --zone ${ZONE} --num-nodes $NODES --machine-type ${MACHINE}
+gcloud container clusters create ${NAME}-demo-ee --zone ${ZONE} --machine-type ${MACHINE} --enable-autoscaling --max-nodes=$MAX_NODES --min-nodes=$NODES
 gcloud container clusters get-credentials ${NAME}-demo-ee --region ${ZONE}
