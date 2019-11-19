@@ -43,8 +43,8 @@ spec:
           value: "false"
         resources:
           requests:
-            cpu: 0.2
-            memory: 2048
+            cpu: 0.5
+            memory: 4096
         readinessProbe:
           httpGet:
             path: /

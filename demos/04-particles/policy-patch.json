@@ -4,14 +4,14 @@
     "steps": [
       {
         "endAfter": {
-          "value": "duration == 30s"
+          "value": "duration == 1m"
         },
         "source": { "weight": 100 },
         "target": { "weight": 0 },
         "conditions": [
           {
             "value": "health >= baselines.health",
-            "gracePeriod": "30s"
+            "gracePeriod": "1m"
           }
         ]
       },
@@ -24,7 +24,7 @@
         "conditions": [
           {
             "value": "health >= baselines.health",
-            "gracePeriod": "30s"
+            "gracePeriod": "1m"
           }
         ]
       },
@@ -37,7 +37,7 @@
         "conditions": [
           {
             "value": "health >= baselines.health",
-            "gracePeriod": "30s"
+            "gracePeriod": "1m"
           }
         ]
       }
@@ -60,7 +60,7 @@
       },
       {
         "name": "maxDuration",
-        "value": "1m"
+        "value": "3m"
       }
     ]
   }
