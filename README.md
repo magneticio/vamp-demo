@@ -2,10 +2,10 @@
 
 This repository contains the required infrastructure, service and artifacts to demo Vamp.
 
-> Current Version: 1.2.0 (tested)
-Vamp-ee:kubernetes-1.2.0
-Qualification-workflow:1.2.0
-Vamp-Release-Agent:2.0.0-preview2
+## Versions used: 1.2.0 (tested)
+- Vamp-ee:kubernetes-1.2.0
+- Qualification-workflow:1.2.0
+- Vamp-Release-Agent:2.0.0-preview2
 
 
 ## Installation
