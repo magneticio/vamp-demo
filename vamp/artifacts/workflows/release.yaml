@@ -4,3 +4,8 @@ breed: release
 schedule: daemon
 environment_variables:
   WINDOW: 60s
+dialects:
+  kubernetes:
+    # serviceAccountName: vamp-quantification
+    imagePullSecrets:
+      - name: regsecret
