@@ -30,6 +30,7 @@ if [ -z $REGSECRET ]; then
     read -p 'Docker Hub - Username: ' dockeruser
     read -sp 'Docker Hub - Password: ' dockerpass
     kubectl create secret docker-registry regsecret --docker-server=https://index.docker.io/v1/ --docker-username=${dockeruser} --docker-password=${dockerpass} --docker-email=docker@vamp.io
+    kubectl --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT} create secret docker-registry regsecret --docker-server=https://index.docker.io/v1/ --docker-username=${dockeruser} --docker-password=${dockerpass} --docker-email=docker@vamp.io
 fi
 
 deploy vamp
