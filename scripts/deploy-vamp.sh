@@ -30,7 +30,8 @@ if [ -z $REGSECRET ]; then
     read -p 'Docker Hub - Username: ' dockeruser
     read -sp 'Docker Hub - Password: ' dockerpass
     kubectl create secret docker-registry regsecret --docker-server=https://index.docker.io/v1/ --docker-username=${dockeruser} --docker-password=${dockerpass} --docker-email=docker@vamp.io
-    kubectl --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT} create secret docker-registry regsecret --docker-server=https://index.docker.io/v1/ --docker-username=${dockeruser} --docker-password=${dockerpass} --docker-email=docker@vamp.io
+    # kubectl get ns vampio-${ORGANIZATION}-${ENVIRONMENT} || kubectl create ns vampio-${ORGANIZATION}-${ENVIRONMENT}
+    # kubectl --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT} create secret docker-registry regsecret --docker-server=https://index.docker.io/v1/ --docker-username=${dockeruser} --docker-password=${dockerpass} --docker-email=docker@vamp.io
 fi
 
 deploy vamp
@@ -50,13 +51,14 @@ VAMP_NAMESPACE=$(kubectl get --no-headers=true namespace -o name | awk -F "/" '{
 if [ -z $VAMP_NAMESPACE ]; then
     echo "Create Namespace vampio-${ORGANIZATION}-${ENVIRONMENT}"
     kubectl create ns vampio-${ORGANIZATION}-${ENVIRONMENT}
+    kubectl --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT} get secret docker-registry regsecret || kubectl --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT} create secret docker-registry regsecret --docker-server=https://index.docker.io/v1/ --docker-username=${dockeruser} --docker-password=${dockerpass} --docker-email=docker@vamp.io
 fi
 
 # Force a restart of Vamp
 restart_vamp ${KUBERNETES_NAMESPACE}
 
 deploy vamp-gateway-agent vampio-${ORGANIZATION}-${ENVIRONMENT}
-kubectl rollout status deployment/vamp-gateway-agent --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT}
+# kubectl rollout status deployment/vamp-gateway-agent --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT}
 
 # Wait until Vamp is available
 if [ $CLOUD != "local" ]; then
