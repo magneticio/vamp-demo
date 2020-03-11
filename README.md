@@ -6,6 +6,7 @@ This repository contains the required infrastructure, service and artifacts to d
 - Vamp-ee:kubernetes-1.2.0
 - Qualification-workflow:1.2.0
 - Vamp-Release-Agent:2.0.0-preview2
+- Forklift: v0.1.20
 
 
 ## Installation
