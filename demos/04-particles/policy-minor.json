@@ -1,6 +1,6 @@
 {
   "name": "minor",
-  "gracePeriod": "1m",
+  "gracePeriod": "40s",
   "steps": [
     {
       "endAfter": {
