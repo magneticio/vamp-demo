@@ -1,17 +1,17 @@
 {
     "name": "patch",
-    "gracePeriod": "1m",
+    "gracePeriod": "40s",
     "steps": [
       {
         "endAfter": {
-          "value": "duration == 1m"
+          "value": "duration == 40s"
         },
         "source": { "weight": 100 },
         "target": { "weight": 0 },
         "conditions": [
           {
             "value": "health >= baselines.health",
-            "gracePeriod": "1m"
+            "gracePeriod": "40s"
           }
         ]
       },
@@ -24,7 +24,7 @@
         "conditions": [
           {
             "value": "health >= baselines.health",
-            "gracePeriod": "1m"
+            "gracePeriod": "40s"
           }
         ]
       },
@@ -37,7 +37,7 @@
         "conditions": [
           {
             "value": "health >= baselines.health",
-            "gracePeriod": "1m"
+            "gracePeriod": "40s"
           }
         ]
       }
@@ -60,7 +60,7 @@
       },
       {
         "name": "maxDuration",
-        "value": "3m"
+        "value": "1m0s"
       }
     ]
   }
