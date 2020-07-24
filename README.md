@@ -13,7 +13,7 @@ This repository contains the required infrastructure, service and artifacts to d
 
 Please make sure that the following tools are available on your machine:
 
-- Vamp CLI: [Installation](https://vamp.io/documentation/cli/using-the-cli/)
+- Vamp CLI: [Installation](https://docs.vamp.io/cli/vamp-cli-ee)
 - Kubernetes CLI: [Installation](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - Google Cloud CLI \*: [Installation](https://cloud.google.com/sdk/docs/#install_the_latest_cloud_tools_version_cloudsdk_current_version)
 
