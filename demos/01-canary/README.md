@@ -11,7 +11,7 @@ We deploy the initial state of the demo using the `demo.sh` shell script and spe
 ./demo.sh run -d=01-canary
 ```
 
-It take some time until the application is deployed. Verify if the application is running at `http://vshop-canary.{name}.demo.vamp.cloud`
+It take some time until the application is deployed. Verify if the application is running at `http://vshop-canary.{name}.demo-ee.vamp.cloud`
 
 ### Apache Bench
 
@@ -53,7 +53,7 @@ Change the weights of the v1 route back to 100%. Now we will start a canary rele
 During the release you should put traffic on the gateway by using Apache Bench using the following command;
 
 ```sh
-ab -n 15000 -c 10 http://vshop-canary.{name}.demo.vamp.cloud/
+ab -n 15000 -c 10 http://vshop-canary.{name}.demo-ee.vamp.cloud/
 ```
 
 ## Details

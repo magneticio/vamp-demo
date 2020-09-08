@@ -9,7 +9,7 @@ SERVICE=particles
 source ./scripts/common.sh
 
 if [ $CLOUD != "local" ]; then
-    open http://$SERVICE.$NAME.demo.vamp.cloud
+    open http://$SERVICE.$NAME.demo-ee.vamp.cloud
 else
     echo "Start port forwarding"
     vamp_connect $CLOUD

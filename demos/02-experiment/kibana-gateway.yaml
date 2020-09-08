@@ -3,7 +3,7 @@ kind: gateways
 deployed: false
 port: 5601/http
 sticky: route
-virtual_hosts: [kibana.__NAME__.demo.vamp.cloud]
+virtual_hosts: [kibana.__NAME__.demo-ee.vamp.cloud]
 routes:
   "[kibana.default.svc.cluster.local:5601]":
     weight: 100%

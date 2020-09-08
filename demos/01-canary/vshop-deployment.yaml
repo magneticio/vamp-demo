@@ -2,7 +2,7 @@ name: vshop-canary
 gateways:
   9050:
     routes: vshop-canary-cluster/web
-    virtual_hosts: [vshop-canary.__NAME__.demo.vamp.cloud]
+    virtual_hosts: [vshop-canary.__NAME__.demo-ee.vamp.cloud]
 clusters:
   vshop-canary-cluster:
     services:
