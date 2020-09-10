@@ -8,6 +8,7 @@ ENVIRONMENT=${4:-environment}
 KUBERNETES_NAMESPACE="default"
 
 source ./scripts/common.sh
+# source ~/.vampdemo/dh-login
 
 deploy mysql
 deploy vault
@@ -30,8 +31,8 @@ if [ -z $REGSECRET ]; then
     read -p 'Docker Hub - Username: ' dockeruser
     read -sp 'Docker Hub - Password: ' dockerpass
     kubectl create secret docker-registry regsecret --docker-server=https://index.docker.io/v1/ --docker-username=${dockeruser} --docker-password=${dockerpass} --docker-email=docker@vamp.io
-    # kubectl get ns vampio-${ORGANIZATION}-${ENVIRONMENT} || kubectl create ns vampio-${ORGANIZATION}-${ENVIRONMENT}
-    # kubectl --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT} create secret docker-registry regsecret --docker-server=https://index.docker.io/v1/ --docker-username=${dockeruser} --docker-password=${dockerpass} --docker-email=docker@vamp.io
+    kubectl get ns vampio-${ORGANIZATION}-${ENVIRONMENT} || kubectl create ns vampio-${ORGANIZATION}-${ENVIRONMENT}
+    kubectl --namespace=vampio-${ORGANIZATION}-${ENVIRONMENT} create secret docker-registry regsecret --docker-server=https://index.docker.io/v1/ --docker-username=${dockeruser} --docker-password=${dockerpass} --docker-email=docker@vamp.io
 fi
 
 deploy vamp
@@ -41,7 +42,8 @@ kubectl rollout status deployment/vamp --namespace=${KUBERNETES_NAMESPACE}
 forklift_connect
 
 forklift create organization ${ORGANIZATION} --file ./vamp/organization-config.yaml --config ./vamp/forklift-config.yaml
-forklift create user admin --role admin --organization ${ORGANIZATION} --config ./vamp/forklift-config.yaml
+# forklift create user admin --role admin --organization ${ORGANIZATION} --config ./vamp/forklift-config.yaml
+forklift add user --organization ${ORGANIZATION} --file ./vamp/user-configuration.json --config ./vamp/forklift-config.yaml
 forklift create environment ${ENVIRONMENT} --organization ${ORGANIZATION} --config ./vamp/forklift-config.yaml --file ./vamp/environment-config.yaml --artifacts ./vamp/artifacts
 
 forklift_disconnect

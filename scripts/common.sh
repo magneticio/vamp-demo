@@ -67,14 +67,14 @@ vamp_login() {
     name=${1:-vamp}
     cloud=${2:-local}
     if [ $cloud != "local" ]; then
-        export VAMP_HOST="http://$name.demo.vamp.cloud:8080"
+        export VAMP_HOST="http://$name.demo-ee.vamp.cloud:8080"
     else
         export VAMP_HOST="http://localhost:8080"
     fi
     export VAMP_NAMESPACE="6d1339c7c7a1ac54246a57320bb1dd15176ce29"
 
-    echo "Login to Vamp ($VAMP_HOST)"
-    vamp login -u admin
+    # echo "Login to Vamp ($VAMP_HOST)"
+    vamp login -u admin -p abc12345
 }
 
 vamp_deploy() {

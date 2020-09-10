@@ -13,7 +13,7 @@ We deploy the initial state of the demo using the `demo.sh` shell script and spe
 ./demo.sh run -d=04-particles
 ```
 
-Verify if the application is running at `http://particles.{name}.demo.vamp.cloud`.
+Verify if the application is running at `http://particles.{name}.demo-ee.vamp.cloud`.
 
 ## Demonstration
 
@@ -54,7 +54,7 @@ kubectl apply -f ./demos/04-particles/particles-v1.0.1.yaml
 kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/demos/04-particles/particles-v1.0.1.yaml
 ```
 
-During the release you can show the url `http://particles.{name}.demo.vamp.cloud`.
+During the release you can show the url `http://particles.{name}.demo-ee.vamp.cloud`.
 
 ![v1.0.1 Half](images/v1.0.1-half.png)
 ![v1.0.1 All](images/v1.0.1-all.png)
@@ -73,7 +73,7 @@ kubectl apply -f https://raw.githubusercontent.com/magneticio/vamp-demo/master/d
 
 This deployment as configured an error rate which simulates that 50% of the calls towards the backend are failing. During the release this should result in the behavior that the release is being rolled back as soon as the application reports itself unhealthy.
 
-Show the url `http://particles.{name}.demo.vamp.cloud/user/a`. demonstrated the ability to segment users/tenants and release new version to a small subset of users.
+Show the url `http://particles.{name}.demo-ee.vamp.cloud/user/a`. demonstrated the ability to segment users/tenants and release new version to a small subset of users.
 
 ![v1.1.0 Tenant](images/v1.1.0-tenant.png)
 ![v1.0.1 All](images/v1.0.1-all.png)

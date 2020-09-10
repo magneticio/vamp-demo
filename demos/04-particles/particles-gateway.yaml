@@ -10,5 +10,5 @@ metadata:
   release.vamp.io/current: "(1.0.0)"
 port: 41004/http
 virtual_hosts: 
- - particles.__NAME__.demo.vamp.cloud
+ - particles.__NAME__.demo-ee.vamp.cloud
 selector: label(app)(particles) && label(version)((.*))

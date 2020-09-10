@@ -2,7 +2,7 @@ name: vshop-experiment
 gateways:
   9060:
     routes: vshop-experiment-cluster/web
-    virtual_hosts: [vshop-experiment.__NAME__.demo.vamp.cloud]
+    virtual_hosts: [vshop-experiment.__NAME__.demo-ee.vamp.cloud]
 clusters:
   vshop-experiment-cluster:
     gateways:

@@ -11,7 +11,7 @@ We deploy the initial state of the demo using the `demo.sh` shell script and spe
 ./demo.sh run -d=02-experiment
 ```
 
-It take some time until the application is deployed. Verify if the application is running at `http://vshop-experiment.{name}.demo.vamp.cloud`
+It take some time until the application is deployed. Verify if the application is running at `http://vshop-experiment.{name}.demo-ee.vamp.cloud`
 
 ### Simulate iPhone
 

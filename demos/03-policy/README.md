@@ -12,7 +12,7 @@ We deploy the initial state of the demo using the `demo.sh` shell script and spe
 ./demo.sh deploy -d=03-policy
 ```
 
-Verify if the vshop application is running at `http://vshop-policy.{name}.demo.vamp.cloud`
+Verify if the vshop application is running at `http://vshop-policy.{name}.demo-ee.vamp.cloud`
 
 ## Demonstration
 
@@ -23,7 +23,7 @@ First we release a new version of the application which has problems regarding p
 Add some load to the service using Apache Bench
 
 ```sh
-ab -n 15000 -c 10 http://vshop-policy.{name}.demo.vamp.cloud/
+ab -n 15000 -c 10 http://vshop-policy.{name}.demo-ee.vamp.cloud/
 ```
 
 Deploy a new version of the VShop service using the Kubernetes CLI.

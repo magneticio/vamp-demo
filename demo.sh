@@ -108,7 +108,7 @@ function create {
     echo "export cloud=$cloud && export name=$name" >> ./.env.sh && chmod +x ./.env.sh
     
     if [ $cloud != "local" ]; then
-        echo "Vamp URL: http://$name.demo.vamp.cloud:8080"
+        echo "Vamp URL: http://$name.demo-ee.vamp.cloud:8080"
     else
         echo "Run: kubectl proxy"
         echo "Vamp URL: http://localhost:8001/api/v1/namespaces/default/services/vamp:/proxy/#"
